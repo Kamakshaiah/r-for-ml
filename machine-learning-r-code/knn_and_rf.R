@@ -1,8 +1,9 @@
 library(ISLR)
+library(caret)
 
 # data
 
-head(Smarket)
+head(Smarket) # from ISLR
 indxTrain <- createDataPartition(y = Smarket$Direction, p = 0.75,list = FALSE)
 head(indxTrain)
 
@@ -28,4 +29,13 @@ knnPredict <- predict(knnFit,newdata = testing )
 # accuracy
 
 confusionMatrix(knnPredict, testing$Direction )
+
+## randomforests
+
+rfFit <- train(Direction ~ ., data = training, method = "rf")
+rfFit
+plot(rfFit)
+
+rfPredict <- predict(rfFit,newdata = testing )
+confusionMatrix(rfPredict, testing$Direction )
 
